@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+  <meta name="theme-color" content="#2b6eaa">
+  <title>Taterz — Baseball</title>
+  <link rel="stylesheet" href="./styles.css">
+  <script type="importmap">
+    { "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.186.1/build/three.module.js" } }
+  </script>
+</head>
+<body>
+  <main id="game-shell">
+    <canvas id="game-canvas" aria-label="3D baseball field"></canvas>
+
+    <header id="hud" class="hud hidden" aria-live="polite">
+      <section class="scoreboard-gui" aria-label="Game scoreboard">
+        <div class="scoreboard-meta">
+          <b id="inning-display">TOP OF THE 1ST</b>
+          <span id="count-display">0 BALL · 0 STRIKE</span>
+        </div>
+        <div class="scoreboard-panel">
+          <section class="scoreboard-team team-away">
+            <span class="score-team-logo" id="away-logo">CC</span>
+            <span class="score-team-name" id="away-name">COM</span>
+            <strong class="score-team-total" id="away-score">0</strong>
+          </section>
+          <section class="scoreboard-center">
+            <div class="scoreboard-inning"><strong id="inning-number">1</strong><span id="inning-half">TOP</span></div>
+            <b id="outs-display" class="scoreboard-outs">0 OUTS</b>
+            <div class="scoreboard-diamond" aria-label="Runners on base">
+              <i class="gui-base gui-second" id="base-second"></i>
+              <i class="gui-base gui-third" id="base-third"></i>
+              <i class="gui-base gui-first" id="base-first"></i>
+              <i class="gui-home"></i>
+            </div>
+          </section>
+          <section class="scoreboard-team team-home">
+            <span class="score-team-logo" id="home-logo">CF</span>
+            <span class="score-team-name" id="home-name">FOX</span>
+            <strong class="score-team-total" id="home-score">0</strong>
+          </section>
+        </div>
+      </section>
+      <div class="game-actions">
+        <button id="phone-status" class="phone-status" aria-label="Phone connection status"><i></i><span>KEYBOARD READY</span></button>
+        <button id="pause-button" class="icon-button" aria-label="Pause game">Ⅱ</button>
+      </div>
+    </header>
+
+    <div id="callout" class="callout hidden" role="status"></div>
+    <section id="home-run-overlay" class="home-run-overlay hidden" role="status" aria-live="assertive">
+      <div class="home-run-hero">
+        <div class="stadium-speakers" aria-hidden="true"><i></i><i></i><i></i></div>
+        <strong>HOME<br><em>RUN!</em></strong>
+      </div>
+      <div class="home-run-card">
+        <b id="home-run-runs">SOLO</b>
+        <strong>HOME RUN</strong>
+        <span id="home-run-count">1ST HOME RUN TODAY</span>
+      </div>
+    </section>
+    <div id="aim-reticle" class="aim-reticle hidden"><i></i></div>
+    <div id="bottom-hint" class="bottom-hint hidden"></div>
+
+    <section id="main-menu" class="screen menu-screen">
+      <div class="menu-copy">
+        <div class="brand-logo-card"><img class="brand-logo" src="./assets/taterz-logo.png" alt="Taterz baseball logo"></div>
+        <div class="menu-actions">
+          <button id="play-button" class="primary-button"><span>PLAY</span><b>→</b></button>
+          <button id="settings-button" class="menu-button">SETTINGS <span class="menu-icon" aria-hidden="true">⚙</span></button>
+        </div>
+      </div>
+    </section>
+
+    <section id="difficulty-panel" class="dialog difficulty-dialog hidden" role="dialog" aria-modal="true" aria-labelledby="difficulty-title">
+      <button class="close-button" data-close="difficulty-panel" aria-label="Back">←</button>
+      <div class="dialog-kicker">PICK YOUR CHALLENGE</div>
+      <h2 id="difficulty-title">Choose a difficulty</h2>
+      <p class="difficulty-intro">You can change this the next time you play.</p>
+      <div class="difficulty-options" role="group" aria-label="Difficulty">
+        <button class="difficulty-option" id="difficulty-easy" type="button" data-difficulty="easy" aria-pressed="false">
+          <strong>Easy</strong><span>Mostly strikes, slower pitches, and more forgiving contact.</span>
+        </button>
+        <button class="difficulty-option" id="difficulty-medium" type="button" data-difficulty="medium" aria-pressed="true">
+          <strong>Medium</strong><span>Fewer foul balls, easier solid contact, and more home-run power.</span>
+        </button>
+        <button class="difficulty-option" id="difficulty-hard" type="button" data-difficulty="hard" aria-pressed="false">
+          <strong>Hard</strong><span>The original pitch speed, contact, and foul-ball settings.</span>
+        </button>
+      </div>
+      <button id="difficulty-continue" class="primary-button dialog-primary"><span>CONTINUE TO PHONE</span><b aria-hidden="true">→</b></button>
+    </section>
+
+    <section id="phone-panel" class="dialog phone-dialog hidden" role="dialog" aria-modal="true" aria-labelledby="phone-title">
+      <button class="close-button" data-close="phone-panel" aria-label="Back">←</button>
+      <h2 id="phone-title">Connect to your phone with a QR code</h2>
+      <div class="pair-layout">
+        <div class="pair-scan">
+          <div class="qr-wrap"><canvas id="phone-qr" width="240" height="240"></canvas><span id="qr-fallback">Finding this computer…</span></div>
+          <p class="pair-instructions">Open your iPhone Camera and scan the QR code. Tap the link that appears, with both devices on the same Wi-Fi.</p>
+        </div>
+        <aside class="computer-orientation-preview" aria-label="Live 3D phone orientation preview">
+          <div class="computer-preview-heading">LIVE PHONE ORIENTATION</div>
+          <div id="computer-orientation-reference" class="computer-preview-reference">WAITING FOR PHONE</div>
+          <div class="computer-phone-scene"><canvas id="computer-phone-canvas" class="computer-phone-canvas" aria-label="Three-dimensional phone orientation preview"></canvas></div>
+          <div class="computer-angle-readout">
+            <span>YAW <b id="computer-angle-yaw">0°</b></span>
+            <span>PITCH <b id="computer-angle-pitch">0°</b></span>
+            <span>ROLL <b id="computer-angle-roll">0°</b></span>
+          </div>
+        </aside>
+      </div>
+      <button id="pair-continue-button" class="primary-button pair-continue-button" disabled>
+        <span>WAITING FOR PHONE…</span><b aria-hidden="true">→</b>
+      </button>
+      <div id="pair-status" class="visually-hidden" aria-live="polite">Preparing your link</div>
+    </section>
+
+    <section id="settings-panel" class="dialog compact-dialog settings-dialog hidden" role="dialog" aria-modal="true" aria-labelledby="settings-title">
+      <button class="close-button" data-close="settings-panel" aria-label="Back">←</button>
+      <div class="dialog-kicker">TATERZ</div>
+      <h2 id="settings-title">Settings</h2>
+      <p class="settings-empty">Set the feel of the field.</p>
+      <div class="environment-settings">
+        <label class="environment-setting" for="setting-time-of-day">
+          <span><b>Time of day</b><small>Change the sky and sunlight</small></span>
+          <select id="setting-time-of-day">
+            <option value="morning">Morning</option>
+            <option value="day">Day</option>
+            <option value="sunset">Sunset</option>
+            <option value="night">Night</option>
+          </select>
+        </label>
+        <label class="environment-setting slider-setting" for="setting-sunlight">
+          <span><b>Sunlight</b><small>Adjust the brightness of the field</small></span>
+          <input id="setting-sunlight" type="range" min="45" max="125" step="5" value="100">
+          <output id="setting-sunlight-value" for="setting-sunlight">100%</output>
+        </label>
+        <label class="environment-setting slider-setting" for="setting-wind">
+          <span><b>Wind</b><small>Adjust the breeze around the stadium</small></span>
+          <input id="setting-wind" type="range" min="0" max="100" step="5" value="45">
+          <output id="setting-wind-value" for="setting-wind">45%</output>
+        </label>
+      </div>
+      <button class="secondary-button" data-close="settings-panel">BACK TO MENU</button>
+    </section>
+
+    <section id="pause-panel" class="dialog compact-dialog hidden" role="dialog" aria-modal="true" aria-labelledby="pause-title">
+      <div class="dialog-kicker">TAKE A BREATHER</div><h2 id="pause-title">Game paused</h2>
+      <button id="resume-button" class="primary-button dialog-primary"><span>BACK TO GAME</span><b>→</b></button>
+      <button id="return-menu-button" class="secondary-button">RETURN TO MENU</button>
+    </section>
+
+    <section id="gameover-panel" class="dialog compact-dialog hidden" role="dialog" aria-modal="true" aria-labelledby="gameover-title">
+      <div class="dialog-kicker">PRACTICE COMPLETE</div><h2 id="gameover-title">Practice complete</h2>
+      <button id="rematch-button" class="primary-button dialog-primary"><span>PLAY AGAIN</span><b>→</b></button>
+      <button id="gameover-menu-button" class="secondary-button">MAIN MENU</button>
+    </section>
+  </main>
+  <script src="./js/qrcode.js"></script>
+  <script type="module" src="./js/main.js"></script>
+</body>
+</html>

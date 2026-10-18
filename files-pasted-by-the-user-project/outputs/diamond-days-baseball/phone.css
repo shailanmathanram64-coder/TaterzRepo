@@ -1,0 +1,97 @@
+*{box-sizing:border-box}body{margin:0;min-height:100dvh;background:radial-gradient(ellipse at 82% 0%,#276451 0,#153e35 47%,#0e2e29 100%);color:#fff;font-family:'DM Sans',system-ui,sans-serif;padding:20px 21px 30px}.controller{max-width:480px;margin:0 auto}header{display:flex;justify-content:space-between;align-items:center;margin-bottom:35px}header a{font-size:10px;font-weight:800;letter-spacing:.14em;color:#d9ef70;text-decoration:none}.mark{font-size:8px;letter-spacing:.18em;color:#bccbb4;font-weight:800}.eyebrow{font-size:9px;font-weight:800;letter-spacing:.2em;color:#d9ef70}h1{font-family:'Barlow Condensed',Impact,sans-serif;font-size:clamp(55px,15vw,82px);line-height:.84;letter-spacing:-.02em;margin:15px 0 17px;font-weight:900}h1 em{font-style:normal;color:#d9ef70}.intro{color:#c8d3c6;font-size:12px;line-height:1.55;max-width:380px;margin:0 0 23px}.host-label{display:grid;gap:8px;font-size:8px;letter-spacing:.15em;font-weight:800;color:#b9c8b6}.host-row{display:flex;gap:8px}.host-row input{min-width:0;flex:1;height:42px;background:#ffffff0d;border:1px solid #ffffff38;color:#fff;padding:0 11px;border-radius:0;font:600 13px system-ui}.host-row button{height:42px;padding:0 13px;border:0;background:#ff713e;color:#fff;font-size:9px;font-weight:900;letter-spacing:.12em}.connection{display:flex;align-items:center;gap:8px;margin:12px 0 17px;font-size:9px;letter-spacing:.12em;font-weight:800}.connection i{width:8px;height:8px;border-radius:50%;background:#ff795d;box-shadow:0 0 10px #ff795d55}.connection.connected i{background:#bce965;box-shadow:0 0 11px #bce96588}.connection.connected{color:#d9ef70}.connection.disconnected{color:#ccd4c4}.motion-button{height:44px;width:100%;background:#d9ef70;color:#173c32;border:0;font-size:10px;font-weight:900;letter-spacing:.12em}.motion-status{font-size:9px;color:#9eafa2;line-height:1.4;margin:8px 0 19px}.section-title{display:flex;gap:10px;align-items:center;font-size:9px;font-weight:900;letter-spacing:.16em;color:#d9ef70;margin:14px 0 10px}.section-title i{height:1px;background:#ffffff32;flex:1}.swing-pad{position:relative;display:flex;min-height:190px;flex-direction:column;align-items:center;justify-content:center;gap:4px;overflow:hidden;border:1px solid #f1ead055;background:linear-gradient(135deg,#e97949 0%,#bd5639 48%,#713d39 100%);touch-action:none;user-select:none}.swing-pad:active{filter:brightness(1.16)}.pad-lines{position:absolute;width:190px;height:190px;border:1px solid #ffffff36;border-radius:50%;right:-30px;top:-42px;box-shadow:0 0 0 20px #ffffff08,0 0 0 42px #ffffff06}.swing-arrow{font-size:43px;line-height:1;margin-top:-7px;text-shadow:0 2px 0 #742d20}.swing-pad b{font-size:17px;letter-spacing:.18em}.swing-pad small{font-size:8px;letter-spacing:.13em;color:#ffe0ca}.pitch-button{width:100%;height:45px;margin-top:9px;background:#ffffff0b;border:1px solid #ffffff45;color:white;font-size:9px;font-weight:900;letter-spacing:.13em}.tip{font-size:9px;line-height:1.5;color:#8fa296;margin:16px 0 0}
+
+.motion-button:disabled{opacity:.72}
+@media(max-width:360px){body{padding-left:14px;padding-right:14px}}
+
+/* Taterz companion controller theme. */
+body {
+  background: radial-gradient(ellipse at 82% 0%, #527c96 0, #2d5065 48%, #203c4d 100%);
+  color: #f5f5ed;
+  font-family: ui-rounded, system-ui, sans-serif;
+}
+.mark, .host-label { color: #d2dfd9; }
+header a, .eyebrow { color: #a9d2ed; }
+.section-title { color: #d28d8e; }
+h1 { font-family: ui-rounded, system-ui, sans-serif; font-weight: 600; letter-spacing: -.04em; }
+h1 em { color: #e7a2a1; }
+.intro { color: #e0e8e2; }
+.host-row input {
+  border: 1px solid #d9e6e64a;
+  border-radius: 12px;
+  background: #1c3547aa;
+  font-family: ui-rounded, system-ui, sans-serif;
+}
+.host-row button {
+  border-radius: 12px;
+  background: #d27a78;
+  font-family: ui-rounded, system-ui, sans-serif;
+}
+.connection.connected, .motion-status { color: #d5e4ec; }
+.connection i { background: #d27a78; box-shadow: 0 0 10px #d27a7855; }
+.connection.connected i { background: #a9d2ed; box-shadow: 0 0 11px #a9d2ed88; }
+.motion-button {
+  border-radius: 14px;
+  background: #b8dcf0;
+  color: #354b5d;
+  font-family: ui-rounded, system-ui, sans-serif;
+}
+.section-title i { background: #dce8e84a; }
+.swing-pad {
+  border: 1px solid #e4eeee78;
+  border-radius: 22px;
+  background: linear-gradient(135deg, #759bb2 0%, #557d98 50%, #3f687f 100%);
+  box-shadow: inset 0 1px #ffffff30, 0 12px 25px #152f4140;
+}
+.swing-pad b { font-family: ui-rounded, system-ui, sans-serif; font-weight: 600; }
+.swing-arrow { color: #f0c2c0; text-shadow: 0 2px 0 #36576b; }
+.swing-pad small { color: #edf0e6; }
+.tip { color: #c5d4cf; }
+
+/* Match the controller to Taterz's jersey blue and white UI. */
+body {
+  background: #ffffff;
+  color: #2b6eaa;
+  font-family: ui-rounded, system-ui, sans-serif;
+}
+header a, .mark, .eyebrow, h1, h1 em, .host-label, .intro,
+.connection, .connection.connected, .connection.disconnected,
+.motion-status, .section-title, .swing-pad small, .tip {
+  color: #2b6eaa;
+}
+h1 { font-family: ui-rounded, system-ui, sans-serif; font-weight: 600; }
+.host-row input {
+  border: 1px solid #2b6eaa;
+  background: #ffffff;
+  color: #2b6eaa;
+  border-radius: 12px;
+  font-family: ui-rounded, system-ui, sans-serif;
+}
+.host-row input::placeholder { color: #2b6eaa; }
+.host-row button, .motion-button {
+  border: 1px solid #2b6eaa;
+  border-radius: 12px;
+  background: #2b6eaa;
+  color: #ffffff;
+  font-family: ui-rounded, system-ui, sans-serif;
+}
+.connection i, .connection.connected i {
+  background: #2b6eaa;
+  box-shadow: none;
+}
+.section-title i { background: #2b6eaa; }
+.swing-pad {
+  border: 1px solid #2b6eaa;
+  border-radius: 22px;
+  background: #2b6eaa;
+  color: #ffffff;
+  box-shadow: none;
+}
+.swing-pad b, .swing-arrow, .swing-pad small { color: #ffffff; }
+.swing-arrow { text-shadow: none; }
+.pad-lines { border-color: #ffffff80; box-shadow: 0 0 0 20px #ffffff16, 0 0 0 42px #ffffff0d; }
+.pitch-button {
+  border: 1px solid #2b6eaa;
+  border-radius: 12px;
+  background: #ffffff;
+  color: #2b6eaa;
+}

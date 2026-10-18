@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+  <meta name="theme-color" content="#2b6eaa">
+  <title>Taterz — Phone Controller</title>
+  <link rel="stylesheet" href="./phone.css">
+</head>
+<body>
+  <main class="controller">
+    <header><a href="./index.html">← TATERZ</a><div class="mark">TATERZ BASEBALL</div></header>
+    <div class="eyebrow">PHONE CONTROLLER</div>
+    <h1>YOUR PHONE.<br><em>YOUR SWING.</em></h1>
+    <p class="intro">Scan the Pair Phone QR code on your computer, then enable motion sensors. The phone follows your movement while batting; when pitching, point it where you want the ball to go and hold steady briefly to throw.</p>
+
+    <label class="host-label">COMPUTER ADDRESS
+      <div class="host-row"><input id="host-input" autocomplete="url" autocapitalize="off" spellcheck="false"><button id="connect-button">CONNECT</button></div>
+    </label>
+    <div id="connection-state" class="connection disconnected"><i></i><span>NOT CONNECTED</span></div>
+
+    <button id="motion-button" class="motion-button">ENABLE MOTION SENSORS</button>
+    <p id="motion-status" class="motion-status">On iPhone, first install the one-time trust profile created by the Mac setup. Tap ENABLE MOTION SENSORS here, then move the phone naturally to control the bat.</p>
+
+    <div class="section-title"><span>SWIPE TO SWING</span><i></i></div>
+    <div id="swing-pad" class="swing-pad" role="button" aria-label="Swipe to swing the bat">
+      <div class="pad-lines"></div><span class="swing-arrow">↗</span><b>SWIPE</b><small>DRAG THROUGH THE BALL</small>
+    </div>
+    <p class="tip">Stay on the same Wi-Fi. Hold your phone in your batting stance, then make a quick forward swing when the pitch reaches the plate.</p>
+  </main>
+  <script type="module" src="./js/phone-controller.js"></script>
+</body>
+</html>
